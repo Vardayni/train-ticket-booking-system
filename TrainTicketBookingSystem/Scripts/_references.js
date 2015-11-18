@@ -1,5 +1,6 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="app/search/results.js" />
+/// <reference path="app/search/search.js" />
 /// <reference path="bootstrap.min.js" />
 /// <reference path="bootstrap-datetimepicker.min.js" />
 /// <reference path="jquery.validate.js" />
