@@ -1,0 +1,46 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using TrainTicketBookingSystem.ViewModels.Train
+@model IList<AvailableTrainViewModel>
+
+@{
+    ViewBag.Title = "Search results";
+}
+
+@if (Model.Count == 0)
+{
+    <h2>No trains found.</h2>
+}
+else
+{
+    <h2>Available trains found: </h2>
+    foreach (var train in Model)
+    {
+        <div class="train-list-item">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        @Html.DisplayFor(x => train.Route.Departure.Name)
+                        - 
+                        @Html.DisplayFor(x => train.Route.Arrival.Name)
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div>
+                    @Html.DisplayFor(x => train.DepartureTime)
+                </div>
+                <div>
+                    @Html.LabelFor(x => train.BusinessClassPassengersCount)
+                    @Html.DisplayFor(x => train.BusinessClassPassengersCount) / @AvailableTrainViewModel.BusinessClassCapacity
+                </div>
+                <div>
+                    @Html.LabelFor(x => train.EconomicClassPassengersCount)
+                    @Html.DisplayFor(x => train.EconomicClassPassengersCount) / @AvailableTrainViewModel.EconomicClassCapacity
+                </div>
+                @Html.ActionLink("Purchase ticket", "Purchase", "Ticket", new { id = train.Id }, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+    }
+}

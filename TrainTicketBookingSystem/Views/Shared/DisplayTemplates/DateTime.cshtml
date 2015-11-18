@@ -1,0 +1,6 @@
+﻿@model DateTime
+
+@{
+    IFormatProvider formatProvider = new System.Globalization.CultureInfo("nl-BE");
+    <p class="date-time">Date: @Model.ToString("dd.MM.yyyy HH:mm", formatProvider)</p>
+}

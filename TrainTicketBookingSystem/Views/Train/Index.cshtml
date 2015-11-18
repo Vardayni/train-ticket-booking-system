@@ -1,0 +1,87 @@
+﻿@model SearchTrainTicketViewModel
+
+@{
+    ViewBag.Title = "Search";
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @Html.ValidationSummary(false, "")
+    </div>
+}
+
+@using (Html.BeginForm("Search", "Train", FormMethod.Get, new { @class = "form-horizontal" }))
+{
+
+    <fieldset>
+        <legend>Search for a train</legend>
+    </fieldset>
+    <div class="departure form-group">
+        @Html.LabelFor(model => model.Departure, htmlAttributes: new { @class = "col-md-2" })
+        <select name="Departure" class="form-control col-md-10">
+            @foreach (var city in ViewBag.Cities)
+                {
+                <option value="@city.Name">
+                    @city.Name
+                </option>
+            }
+        </select>
+    </div>
+        <div class="arrival form-group">
+            @Html.LabelFor(model => model.Arrival, htmlAttributes: new { @class = "col-md-2" })
+
+            <select name="Arrival" class="form-control col-md-10">
+                @foreach (var city in ViewBag.Cities)
+                {
+                    <option value="@city.Name">
+                        @city.Name
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="departure-time form-group form-inline">
+            @Html.LabelFor(model => model.DepartureTime, htmlAttributes: new { @class = "col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DepartureTime, new { htmlAttributes = new { @class = "form-control", @id = "departureDate" } })
+                @Html.ValidationMessageFor(model => model.DepartureTime, "", new { @class = "text-danger" })
+
+                <select name="DepartureTimeHour" class="form-control">
+                    @foreach (var hour in ViewBag.Hours)
+                    {
+                        <option value="@hour.Value">
+                            @hour.Key
+                        </option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="submit form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-primary"><i class="material-icons small">&#xE8B6;</i> Search</button>
+            </div>
+        </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(function () {
+            var minDate = moment(),
+                maxDate = moment().add('days', 13);
+            $('#departureDate').datetimepicker({
+                minDate: minDate,
+                maxDate: maxDate,
+                format: 'L',
+                locale: 'en-au',
+                showClose: true,
+                showClear: true,
+                toolbarPlacement: 'top'
+            });
+        });
+    </script>
+}
+

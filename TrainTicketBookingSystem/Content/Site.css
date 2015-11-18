@@ -1,0 +1,78 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    margin-top: 3em;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 75% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+
+/** TRAIN TICKET BOOKING SYSTEM SPECIFIC */
+
+/** Landing page */
+.navbar-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 20;
+}
+
+#carousel-wrapper {
+    margin-bottom: 5em;
+}
+
+#carousel-wrapper img {
+    filter: blur(2px);
+	-webkit-filter: blur(2px);
+	-moz-filter: blur(2px);
+	-o-filter: blur(2px);
+	-ms-filter: blur(2px);
+
+    filter: brightness(75%);
+	-webkit-filter: brightness(75%);
+	-moz-filter: brightness(75%);
+	-o-filter: brightness(75%);
+	-ms-filter: brightness(75%);
+}
+
+@media only screen and (max-width: 996px) {
+    #carousel-wrapper img {
+        max-width: none;
+    }
+}
+
+.carousel-caption {
+    padding-bottom: 120px;
+}
+
+.landing-container {
+    margin-top: 3em;
+}
+
+.marketing .summaries {
+    text-align: center;
+}
+
+.icon-train, .icon-price, .icon-destination {
+    font-size: 8em;
+    text-align: center;
+}

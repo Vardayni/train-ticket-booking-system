@@ -1,0 +1,96 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "List of purchased tickets.";
+}
+
+@model IList<TrainTicket>
+
+@if (Model.Count == 0)
+{
+    <h4>You don't have any tickets purchased.</h4>
+}
+
+<div class="row">
+    @foreach (var ticket in Model)
+    {
+        <div class="col-md-4">
+            <div class="ticket panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        @Html.DisplayFor(x => ticket.Departure.Name)
+                        -
+                        @Html.DisplayFor(x => ticket.Arrival.Name)
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="container">
+
+                        <div class="row">
+                            @Html.DisplayFor(x => ticket.DepartureTime)
+                        </div>
+                        <div class="row">
+                            @Html.LabelFor(x => ticket.Price):
+                            @Html.DisplayFor(x => ticket.Price)
+                        </div>
+                        <div class="row">
+                            @if (ticket.IsConfirmed)
+                            {
+                                <button class="btn btn-success disabled">Confirmed</button>
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Send confirmation email", "SendPurchaseConfirmationEmail", new { ticketId = ticket.Id }, new { @class = "btn btn-active" })
+                            }
+                            @Html.ActionLink("Cancel", "Cancel", "Ticket", new { id = ticket.Id }, new { @class = "btn btn-danger cancelBtn", @id = ticket.Id })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="modal fade" id="cancelModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Are you sure you want to cancel this ticket?</h4>
+            </div>
+            <div id="modal-body" class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <a class="btn btn-primary" id="confirmCancellationBtn">Yes</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        var cancelButtons = [].slice.call($('.cancelBtn'));
+
+        cancelButtons.forEach(function (btn) {
+            $(btn).on('click', function (event) {
+                var url = 'IsCancellableWithoutFee',
+                    id = btn.id;
+
+                event.preventDefault();
+
+                $.get(url, { ticketId: id }, function (isCancellable) {
+                    $('#confirmCancellationBtn').attr('href', '/ticket/cancel/' + id);
+                    if (isCancellable === true) {
+                        $('#modal-body').text('You can cancel for free.');
+                    } else if (isCancellable === false) {
+                        $('#modal-body').text('You will only be refunded 50% of the ticket price.');
+                    }
+
+                    $('#cancelModal').modal;
+                    $('#cancelModal').modal('show');
+                });
+            });
+        });
+    </script>
+}
