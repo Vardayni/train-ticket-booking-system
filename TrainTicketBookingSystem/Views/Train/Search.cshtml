@@ -10,7 +10,7 @@
 
 @if (Model.Count == 0)
 {
-    <h2>No trains found.</h2>
+    <h2>No trains found. Try searching with different criteria.</h2>
 }
 else
 {
@@ -22,25 +22,33 @@ else
                 <div class="panel-heading">
                     <h3 class="panel-title">
                         @Html.DisplayFor(x => train.Route.Departure.Name)
-                        - 
+                        -
                         @Html.DisplayFor(x => train.Route.Arrival.Name)
-                </h3>
-            </div>
-            <div class="panel-body">
-                <div>
-                    @Html.DisplayFor(x => train.DepartureTime)
+                    </h3>
                 </div>
-                <div>
-                    @Html.LabelFor(x => train.BusinessClassPassengersCount)
-                    @Html.DisplayFor(x => train.BusinessClassPassengersCount) / @AvailableTrainViewModel.BusinessClassCapacity
+                <div class="panel-body">
+                    <div>
+                        @Html.Label("Date:")
+                        <b>
+                            @Html.DisplayFor(x => train.DepartureTime)
+                        </b>
+                    </div>
+                    <label>Seats taken:</label>
+                    <div>
+                        @Html.LabelFor(x => train.BusinessClassPassengersCount):
+                        <b>
+                            @Html.DisplayFor(x => train.BusinessClassPassengersCount) / @AvailableTrainViewModel.BusinessClassCapacity
+                        </b>
+                    </div>
+                    <div>
+                        @Html.LabelFor(x => train.EconomicClassPassengersCount):
+                        <b>
+                            @Html.DisplayFor(x => train.EconomicClassPassengersCount) / @AvailableTrainViewModel.EconomicClassCapacity
+                        </b>
+                    </div>
+                    @Html.ActionLink("View Details", "Purchase", "Ticket", new { id = train.Id }, new { @class = "btn btn-primary" })
                 </div>
-                <div>
-                    @Html.LabelFor(x => train.EconomicClassPassengersCount)
-                    @Html.DisplayFor(x => train.EconomicClassPassengersCount) / @AvailableTrainViewModel.EconomicClassCapacity
-                </div>
-                @Html.ActionLink("Purchase ticket", "Purchase", "Ticket", new { id = train.Id }, new { @class = "btn btn-default" })
             </div>
         </div>
-    </div>
     }
 }

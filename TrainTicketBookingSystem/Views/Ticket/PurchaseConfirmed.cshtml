@@ -1,1 +1,18 @@
-﻿<h3>@ViewBag.ConfirmationMessage</h3>
+﻿@{ 
+    ViewBag.Title = "Purchase confirmation";
+}
+
+@if (ViewBag.IsConfirmed)
+{
+    <div class="alert alert-success" role="alert">
+        <i class="material-icons">&#xE88F;</i>
+        <span>You successfully confirmed your purchase.</span>
+    </div>
+}
+else if (ViewBag.IsAlreadyConfirmed)
+{
+    <div class="alert alert-warning" role="alert">
+        <i class="material-icons">&#xE88F;</i>
+        <span>This ticket has already been confirmed.</span>
+    </div>
+}

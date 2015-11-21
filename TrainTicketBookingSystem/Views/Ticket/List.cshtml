@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "List of purchased tickets.";
+    ViewBag.Title = "Purchased tickets";
 }
 
 @model IList<TrainTicket>
@@ -33,9 +33,12 @@
                             @Html.DisplayFor(x => ticket.Price)
                         </div>
                         <div class="row">
+                            Status: @(ticket.IsConfirmed ? "Confirmed" : "Unconfirmed")
+                        </div>
+                        <div class="row">
                             @if (ticket.IsConfirmed)
                             {
-                                <button class="btn btn-success disabled">Confirmed</button>
+                                @Html.ActionLink("Print", "Print", new { id = ticket.Id }, new { @class = "btn btn-active" })
                             }
                             else
                             {

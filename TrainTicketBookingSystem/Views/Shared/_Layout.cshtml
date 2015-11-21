@@ -10,40 +10,17 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Search", "Index", "Train")</li>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li>@Html.ActionLink("Purchased Tickets", "List", "Ticket")</li>
-                    }
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <li>@Html.ActionLink("Create user", "CreateUser", "Administrator")</li>
-                        <li>@Html.ActionLink("Add role", "AddRole", "Administrator")</li>
-                    }
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
+    <div class="navbar-wrapper">
+        @Html.Partial("_NavigationBar")
     </div>
     <div class="container body-content">
         @RenderBody()
+    </div>
+
+    <div class="container">
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Train Ticket Booking System</p>
+            <p>© 2015 - Train Ticket Booking System</p>
         </footer>
     </div>
 

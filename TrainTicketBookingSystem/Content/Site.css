@@ -5,6 +5,7 @@
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
+    min-height: 450px;
     margin-top: 3em;
     padding-left: 15px;
     padding-right: 15px;
@@ -27,6 +28,10 @@ textarea {
 
 /** TRAIN TICKET BOOKING SYSTEM SPECIFIC */
 
+.input-validation-error {
+    color: red;
+}
+
 /** Landing page */
 .navbar-wrapper {
     position: absolute;
@@ -40,19 +45,18 @@ textarea {
     margin-bottom: 5em;
 }
 
-#carousel-wrapper img {
-    filter: blur(2px);
-	-webkit-filter: blur(2px);
-	-moz-filter: blur(2px);
-	-o-filter: blur(2px);
-	-ms-filter: blur(2px);
-
-    filter: brightness(75%);
-	-webkit-filter: brightness(75%);
-	-moz-filter: brightness(75%);
-	-o-filter: brightness(75%);
-	-ms-filter: brightness(75%);
-}
+    #carousel-wrapper img {
+        filter: blur(2px);
+        -webkit-filter: blur(2px);
+        -moz-filter: blur(2px);
+        -o-filter: blur(2px);
+        -ms-filter: blur(2px);
+        filter: brightness(75%);
+        -webkit-filter: brightness(75%);
+        -moz-filter: brightness(75%);
+        -o-filter: brightness(75%);
+        -ms-filter: brightness(75%);
+    }
 
 @media only screen and (max-width: 996px) {
     #carousel-wrapper img {

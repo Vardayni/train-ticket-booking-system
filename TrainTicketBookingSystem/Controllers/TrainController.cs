@@ -25,7 +25,6 @@ namespace TrainTicketBookingSystem.Controllers
 
         // GET: trains/search
         [HttpGet]
-        //[Route("trains/search")]
         public ActionResult Search(SearchTrainTicketViewModel trainTicket)
         {
             ViewBag.Errors = new List<string>();
@@ -37,22 +36,21 @@ namespace TrainTicketBookingSystem.Controllers
 
                 if (departureTime < DateTime.Now)
                 {
-                    // TODO: Return error
                     ModelState.AddModelError("AlreadyDeparted", "The time of departure for your search has already passed.");
                     InitializeCitiesAndHoursDropDownLists();
-                    return View("Index", trainTicket);
+                    return View(nameof(this.Index), trainTicket);
                 }
 
-                TrainRoute trainRoute = db.TrainRoutes.Where(r => r.Arrival.Name == trainTicket.Arrival)
+                var trainRoute = db.TrainRoutes
+                                             .Where(r => r.Arrival.Name == trainTicket.Arrival)
                                              .Where(r => r.Departure.Name == trainTicket.Departure)
                                              .SingleOrDefault();
 
                 if (trainRoute == null)
                 {
-                    // TODO: Return error
                     ModelState.AddModelError("InvalidRoute", "Departure and arrival cities should be different.");
                     InitializeCitiesAndHoursDropDownLists();
-                    return View("Index", trainTicket);
+                    return View(nameof(this.Index), trainTicket);
                 }
 
                 var trains = db.Trains
@@ -91,6 +89,11 @@ namespace TrainTicketBookingSystem.Controllers
         public ActionResult Details(Guid? id)
         {
             var train = db.Trains.Where(t => t.Id == id).SingleOrDefault();
+
+            if (train == null)
+            {
+                return new HttpStatusCodeResult(404);
+            }
 
             var model = new AvailableTrainViewModel
             {

@@ -1,0 +1,26 @@
+﻿@{
+    Layout = null;
+}
+
+@model TrainTicket
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Train ticket</title>
+</head>
+<body>
+    <div>
+        <h2>Train Ticket</h2>
+        <p>@Model.Id</p>
+        <h3>Departure: @Model.Departure.Name</h3>
+        <h3>Arrival: @Model.Arrival.Name</h3>
+        <h4>Date: @Model.DepartureTime.Value.ToShortDateString()</h4>
+        <h4>Hour: @Model.DepartureTime.Value.ToString("HH:mm")</h4>
+        <h4>Price: @Html.DisplayFor(x => Model.Price)</h4>
+        <p>@Html.DisplayFor(x => Model.IsBusinessClass)</p>
+        <p>Issued on: @Model.PurchasedOn.ToString() </p>
+    </div>
+</body>
+</html>

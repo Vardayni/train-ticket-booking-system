@@ -74,7 +74,8 @@
     <script>
         $(function () {
             var minDate = moment(),
-                maxDate = moment().add('days', 13);
+                maxDate = moment().add(13, 'days');
+
             $('#departureDate').datetimepicker({
                 minDate: minDate,
                 maxDate: maxDate,

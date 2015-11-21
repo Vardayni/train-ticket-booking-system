@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Web;
 using System.Web.Mvc;
+using TrainTicketBookingSystem.Filters;
 using TrainTicketBookingSystem.Helpers;
 using TrainTicketBookingSystem.Models;
 using TrainTicketBookingSystem.ViewModels;
@@ -32,10 +30,10 @@ namespace TrainTicketBookingSystem.Controllers
         [Authorize]
         public ActionResult List()
         {
-            var currentUser = UserManager.FindById(User.Identity.GetUserId());
+            string currentUserId = User.Identity.GetUserId();
 
             var tickets = db.TrainTickets
-                            .Where(t => t.UserId.ToString() == currentUser.Id)
+                            .Where(t => t.UserId.ToString() == currentUserId)
                             .ToList();
 
             return View(tickets);
@@ -46,11 +44,11 @@ namespace TrainTicketBookingSystem.Controllers
         public ActionResult Purchase(Guid id)
         {
             var train = db.Trains.Find(id);
+
             var viewModel = new AvailableTrainViewModel()
             {
                 Id = train.Id,
                 Route = train.Route,
-                // query here
                 BusinessClassPassengersCount = (db.TrainTickets
                                                     .Where(t => t.TrainId == train.Id)
                                                     .Where(t => t.IsConfirmed)
@@ -77,7 +75,7 @@ namespace TrainTicketBookingSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Purchase(PurchaseTicketViewModel ticket)
         {
-            var currentUser = UserManager.FindById(User.Identity.GetUserId());
+            var currentUserId = User.Identity.GetUserId();
             var train = db.Trains.Find(ticket.Id);
 
             if (train == null)
@@ -90,7 +88,6 @@ namespace TrainTicketBookingSystem.Controllers
             {
                 Id = train.Id,
                 Route = train.Route,
-                // query here
                 BusinessClassPassengersCount = (db.TrainTickets
                                         .Where(t => t.TrainId == train.Id)
                                         .Where(t => t.IsConfirmed)
@@ -108,10 +105,9 @@ namespace TrainTicketBookingSystem.Controllers
                 DepartureTime = train.DepartureTime
             };
 
-            // extract method
             string errorMessage = ValidateAvailableSeats(ticket, viewModel);
 
-            if (!"".Equals(errorMessage))
+            if (!string.IsNullOrEmpty(errorMessage))
             {
                 ViewBag.Error = errorMessage;
                 return View(viewModel);
@@ -119,7 +115,7 @@ namespace TrainTicketBookingSystem.Controllers
 
             var generatedTicket = new TrainTicket()
             {
-                UserId = new Guid(currentUser.Id),
+                UserId = new Guid(currentUserId),
                 TrainId = train.Id,
                 Departure = train.Route.Departure,
                 Arrival = train.Route.Arrival,
@@ -130,16 +126,12 @@ namespace TrainTicketBookingSystem.Controllers
                 Price = train.Route.Price * ticket.PassengersCount,
                 IsConfirmed = false
             };
-
             generatedTicket.Price *= generatedTicket.IsBusinessClass ? 1.5m : 1.0m;
+
             db.TrainTickets.Add(generatedTicket);
             db.SaveChanges();
 
-            // should be uncommented in production
             return SendPurchaseConfirmationEmail(generatedTicket.Id);
-
-            // should be commented in production
-            //ConfirmTicketPurchase(generatedTicket.Id);
         }
 
         // GET /ticket/cancel/{id}
@@ -149,15 +141,32 @@ namespace TrainTicketBookingSystem.Controllers
         {
             var ticketToCancel = db.TrainTickets.Find(id);
 
-            if (ticketToCancel == null)
+            if (ticketToCancel == null ||
+                ticketToCancel.UserId.ToString() != User.Identity.GetUserId())
             {
-                throw new NullReferenceException("Cannot find this ticket.");
+                return new HttpStatusCodeResult(404); 
             }
 
             db.TrainTickets.Remove(ticketToCancel);
             db.SaveChanges();
 
-            return RedirectToAction("List");
+            return RedirectToAction(nameof(this.List));
+        }
+
+        // GET ticket/print/{id}
+        [HttpGet]
+        [Authorize]
+        public ActionResult Print(Guid id)
+        {
+            var ticket = db.TrainTickets.Find(id);
+
+            if (ticket == null || 
+                ticket.UserId.ToString() != User.Identity.GetUserId())
+            {
+                return new HttpStatusCodeResult(404);
+            }
+
+            return View(ticket);
         }
 
         // GET /tickets/ConfirmTicketPurchase/{id}
@@ -167,14 +176,16 @@ namespace TrainTicketBookingSystem.Controllers
         {
             var ticket = db.TrainTickets.Find(id);
 
-            if (ticket == null)
+            if (ticket == null || 
+                ticket.UserId.ToString() != User.Identity.GetUserId())
             {
                 return new HttpStatusCodeResult(404);
             }
 
             if (ticket.IsConfirmed)
             {
-                ViewBag.ConfirmationMessage = "This ticket has already been confirmed.";
+                ViewBag.IsAlreadyConfirmed = true;
+                ViewBag.IsConfirmed = false;
                 return View("PurchaseConfirmed");
             }
 
@@ -186,17 +197,21 @@ namespace TrainTicketBookingSystem.Controllers
             entry.Property(e => e.IsConfirmed).IsModified = true;
             db.SaveChanges();
 
-            ViewBag.ConfirmationMessage = "You successfully confirmed your purchase.";
+            ViewBag.IsConfirmed = true;
             return View("PurchaseConfirmed");
         }
 
+        // GET /tickets/SendPurchaseConfirmationEmail/{id}
+        [HttpGet]
+        [Authorize]
         public ActionResult SendPurchaseConfirmationEmail(Guid ticketId)
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
             var websiteUrl = new UrlHelper(this.ControllerContext.RequestContext);
             var ticket = db.TrainTickets.Find(ticketId);
 
-            if (ticket == null)
+            if (ticket == null || 
+                ticket.UserId.ToString() != user.Id)
             {
                 return new HttpStatusCodeResult(404);
             }
@@ -204,8 +219,8 @@ namespace TrainTicketBookingSystem.Controllers
             MailAddress from = new MailAddress("admin@trainticketbookingsystem.com");
             MailAddress to = new MailAddress(user.Email);
 
-            string username = ConfigurationManager.AppSettings["sendGridUser"];
-            string password = ConfigurationManager.AppSettings["sendGridPassword"]; 
+            string sendGridUserName = ConfigurationManager.AppSettings["sendGridUser"];
+            string sendGridPassword = ConfigurationManager.AppSettings["sendGridPassword"]; 
 
             SmtpClient mail = new SmtpClient()
             {
@@ -214,16 +229,17 @@ namespace TrainTicketBookingSystem.Controllers
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(username, password),
+                Credentials = new NetworkCredential(sendGridUserName, sendGridPassword),
                 Timeout = 20000
             };
 
             const string websiteRoot = "http://localhost:50665";
             MailMessage msg = new MailMessage(from, to);
+
             msg.Subject = "Train ticket purchase confirmation.";
             msg.BodyEncoding = System.Text.Encoding.UTF8;
-            
             msg.IsBodyHtml = true;
+            
             msg.Body += $"Dear {user.FirstName}, you requested to purchase the following ticket: ";
             msg.Body += $"<p> {ticket.ToString()} </p>";
             msg.Body += $"<a href=\"{websiteRoot}{websiteUrl.Action("ConfirmTicketPurchase")}/{ticket.Id}\" >";
@@ -233,6 +249,24 @@ namespace TrainTicketBookingSystem.Controllers
             mail.Send(msg);
 
             return View("ConfirmationEmailSent");
+        }
+
+        // AJAX
+        // GET: /Ticket/IsCancellableWithoutFee/{id}
+        [HttpGet]
+        [Authorize]
+        [AjaxOnly]
+        public JsonResult IsCancellableWithoutFee(Guid ticketId)
+        {
+            var ticket = db.TrainTickets.Find(ticketId);
+
+            if (ticket == null)
+            {
+                return Json("undefined", JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(ticket.DepartureTime.Value.Subtract(DateTime.Now)
+                   >= new TimeSpan(3, 0, 0, 0, 0) || !ticket.IsConfirmed, JsonRequestBehavior.AllowGet);
         }
 
         private string ValidateAvailableSeats(PurchaseTicketViewModel ticket, AvailableTrainViewModel train)
@@ -262,17 +296,6 @@ namespace TrainTicketBookingSystem.Controllers
             }
 
             return string.Empty;
-        }
-
-        // AJAX
-        // GET: /Ticket/IsCancellableWithoutFee/{id}
-        [HttpGet]
-        public JsonResult IsCancellableWithoutFee(Guid ticketId)
-        {
-            var ticket = db.TrainTickets.Find(ticketId);
-
-            return Json(ticket.DepartureTime.Value.Subtract(DateTime.Now)
-                   >= new TimeSpan(3, 0, 0, 0, 0) || !ticket.IsConfirmed, JsonRequestBehavior.AllowGet);
         }
     }
 }

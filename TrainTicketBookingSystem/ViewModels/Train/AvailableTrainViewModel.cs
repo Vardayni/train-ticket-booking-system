@@ -16,11 +16,11 @@ namespace TrainTicketBookingSystem.ViewModels.Train
         [Display(Name = "Departure Time")]
         public DateTime DepartureTime { get; set; }
 
-        [Display(Name = "Business Class Passengers Count")]
+        [Display(Name = "Business")]
         [Range(0, 10)]
         public int BusinessClassPassengersCount { get; set; } = 0;
 
-        [Display(Name = "Economic Class Passengers Count")]
+        [Display(Name = "Economic")]
         [Range(0, 20)]
         public int EconomicClassPassengersCount { get; set; } = 0;
 
