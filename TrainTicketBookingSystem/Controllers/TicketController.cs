@@ -28,6 +28,7 @@ namespace TrainTicketBookingSystem.Controllers
         // GET /tickets
         [HttpGet]
         [Authorize]
+        [HasBanner]
         public ActionResult List()
         {
             string currentUserId = User.Identity.GetUserId();
@@ -80,8 +81,7 @@ namespace TrainTicketBookingSystem.Controllers
 
             if (train == null)
             {
-                ViewBag.Error = "No such train found. Try again with different criteria.";
-                return View();
+                return new HttpStatusCodeResult(404);
             }
 
             var viewModel = new AvailableTrainViewModel()
@@ -104,6 +104,12 @@ namespace TrainTicketBookingSystem.Controllers
                                         .Sum()),
                 DepartureTime = train.DepartureTime
             };
+
+            if (train.DepartureTime < DateTime.Now)
+            {
+                ViewBag.Error = "This train has already departed.";
+                return View(viewModel);
+            }
 
             string errorMessage = ValidateAvailableSeats(ticket, viewModel);
 
@@ -236,7 +242,7 @@ namespace TrainTicketBookingSystem.Controllers
             const string websiteRoot = "http://localhost:50665";
             MailMessage msg = new MailMessage(from, to);
 
-            msg.Subject = "Train ticket purchase confirmation.";
+            msg.Subject = $"Confirm your train ticket ({ticket.Departure.Name} - {ticket.Arrival.Name}).";
             msg.BodyEncoding = System.Text.Encoding.UTF8;
             msg.IsBodyHtml = true;
             

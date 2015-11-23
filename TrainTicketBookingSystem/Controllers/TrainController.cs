@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TrainTicketBookingSystem.Filters;
 using TrainTicketBookingSystem.Helpers;
 using TrainTicketBookingSystem.Models;
 using TrainTicketBookingSystem.ViewModels;
@@ -15,6 +16,8 @@ namespace TrainTicketBookingSystem.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: trains/ 
+        [HttpGet]
+        [HasBanner]
         public ActionResult Index()
         {
             InitializeCitiesAndHoursDropDownLists();
@@ -25,6 +28,7 @@ namespace TrainTicketBookingSystem.Controllers
 
         // GET: trains/search
         [HttpGet]
+        [HasBanner]
         public ActionResult Search(SearchTrainTicketViewModel trainTicket)
         {
             ViewBag.Errors = new List<string>();
@@ -54,9 +58,11 @@ namespace TrainTicketBookingSystem.Controllers
                 }
 
                 var trains = db.Trains
-                                     .Where(t => t.DepartureTime == departureTime)
+                                     .Where(t => t.DepartureTime >= departureTime)
                                      .Where(t => t.Route.Arrival.Name == trainRoute.Arrival.Name)
                                      .Where(t => t.Route.Departure.Name == trainRoute.Departure.Name)
+                                     .OrderBy(t => t.DepartureTime)
+                                     .Take(3)
                                      .Select(tr => new AvailableTrainViewModel()
                                      {
                                          Route = tr.Route,
@@ -86,6 +92,7 @@ namespace TrainTicketBookingSystem.Controllers
         }
 
         // GET: trains/details/{id}
+        [HttpGet]
         public ActionResult Details(Guid? id)
         {
             var train = db.Trains.Where(t => t.Id == id).SingleOrDefault();
@@ -106,6 +113,7 @@ namespace TrainTicketBookingSystem.Controllers
             return View(model);
         }
 
+        // TODO: Add as a filter
         private void InitializeCitiesAndHoursDropDownLists()
         {
             var cities = db.Cities.ToList();

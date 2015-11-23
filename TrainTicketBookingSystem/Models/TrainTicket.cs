@@ -20,8 +20,10 @@ namespace TrainTicketBookingSystem.Models
 		virtual public City Arrival { get; set; }
 
         [DataType(DataType.Date)]
+        [Display(Name = "Date")]
 		public DateTime? DepartureTime { get; set; }
 
+        [UIHint("PassengerClass")]
 		public bool IsBusinessClass { get; set; }
 
 		[Range(1, 10)]
@@ -32,6 +34,8 @@ namespace TrainTicketBookingSystem.Models
         [UIHint("Currency")]
         public decimal Price { get; set; }
 
+        [Display(Name = "Status")]
+        [UIHint("ConfirmationStatus")]
         public bool IsConfirmed { get; set; }
 
         public override string ToString()

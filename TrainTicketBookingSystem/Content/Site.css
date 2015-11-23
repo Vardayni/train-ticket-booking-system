@@ -25,11 +25,76 @@ textarea {
     max-width: 280px;
 }
 
-
+select {
+    text-align: center;
+    min-width: 66px;
+}
 /** TRAIN TICKET BOOKING SYSTEM SPECIFIC */
+
+.carousel-caption p {
+    font-size: 1.5em;
+}
+
+.carousel-caption small {
+    font-size: 1.2em;
+    color: lightblue;
+}
+
+.navbar-inverse .navbar-toggle .icon-bar {
+    background-color: white;
+}
 
 .input-validation-error {
     color: red;
+}
+
+.panel:hover {
+    -moz-box-shadow: 0 2px 9px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 2px 9px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 9px rgba(0, 0, 0, 0.5);
+}
+
+.panel-primary:hover {
+    background-color: azure;
+}
+
+.panel-default:hover {
+    background-color: rgba(0,0,0, 0.1);
+}
+
+.banner {
+    width: 300px;
+    height: 250px;
+}
+
+.amsterdam-img {
+    background: #000 no-repeat center url('Images/amsterdam-banner.jpg');
+}
+
+.banner-heading, .banner-content {
+    color: white;
+    padding: 0.5em 0.5em;
+}
+
+.banner-heading {
+    padding-top: 1.0em;
+}
+
+@media only screen and (max-width: 974px) and (min-width: 480px) {
+    .banner {
+        width: 728px;
+        height: 90px;
+    }
+
+    .banner-content {
+        position: absolute;
+        visibility: hidden;
+    }
+
+        .banner-content:before {
+            content: '';
+            visibility: visible;
+        }
 }
 
 /** Landing page */

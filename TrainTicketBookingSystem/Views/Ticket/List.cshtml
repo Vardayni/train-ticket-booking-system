@@ -13,36 +13,52 @@
 <div class="row">
     @foreach (var ticket in Model)
     {
+        string panelThemeClass = ticket.IsConfirmed ? "success" : "warning";
+
         <div class="col-md-4">
-            <div class="ticket panel panel-primary">
+            <div class="ticket panel panel-@panelThemeClass">
                 <div class="panel-heading">
                     <h3 class="panel-title">
                         @Html.DisplayFor(x => ticket.Departure.Name)
-                        -
+                        <i class="material-icons" style="font-size: 15px">&#xE5C8;</i>
                         @Html.DisplayFor(x => ticket.Arrival.Name)
+                        (
+                            <i class="material-icons" style="font-size: 15px">&#xE7FB;</i>
+                            x
+                            @Html.DisplayFor(x => ticket.PassengersCount)
+                        )
                     </h3>
                 </div>
                 <div class="panel-body">
                     <div class="container">
 
                         <div class="row">
-                            @Html.DisplayFor(x => ticket.DepartureTime)
+                            @Html.LabelFor(x => ticket.DepartureTime):
+                            <b>
+                                @Html.DisplayFor(x => ticket.DepartureTime)
+                            </b>
                         </div>
                         <div class="row">
                             @Html.LabelFor(x => ticket.Price):
-                            @Html.DisplayFor(x => ticket.Price)
+                            <b class="text-success">
+                                @Html.DisplayFor(x => ticket.Price)
+                                <span class="text-muted">(@Html.DisplayFor(x => ticket.IsBusinessClass))</span>
+                            </b>
                         </div>
                         <div class="row">
-                            Status: @(ticket.IsConfirmed ? "Confirmed" : "Unconfirmed")
+                            @Html.LabelFor(x => ticket.IsConfirmed):
+                            <b>
+                                @Html.DisplayFor(x => ticket.IsConfirmed)
+                            </b>
                         </div>
                         <div class="row">
                             @if (ticket.IsConfirmed)
                             {
-                                @Html.ActionLink("Print", "Print", new { id = ticket.Id }, new { @class = "btn btn-active" })
+                                @Html.ActionLink("Print", "Print", new { id = ticket.Id }, new { @class = "btn btn-primary" })
                             }
                             else
                             {
-                                @Html.ActionLink("Send confirmation email", "SendPurchaseConfirmationEmail", new { ticketId = ticket.Id }, new { @class = "btn btn-active" })
+                                @Html.ActionLink("Send confirmation email", "SendPurchaseConfirmationEmail", new { ticketId = ticket.Id }, new { @class = "btn btn-primary" })
                             }
                             @Html.ActionLink("Cancel", "Cancel", "Ticket", new { id = ticket.Id }, new { @class = "btn btn-danger cancelBtn", @id = ticket.Id })
                         </div>
@@ -51,6 +67,9 @@
             </div>
         </div>
     }
+    <div id="banner-wrapper" class="col-md-4">
+        @Html.Partial("_Banner")
+    </div>
 </div>
 <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">

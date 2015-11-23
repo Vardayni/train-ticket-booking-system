@@ -1,0 +1,14 @@
+﻿@{
+    Layout = null;
+}
+
+@model Boolean
+
+@if (Model)
+{
+    <span class="text-success">Confirmed</span>
+}
+else
+{
+    <span class="text-warning">Unconfirmed</span>
+}

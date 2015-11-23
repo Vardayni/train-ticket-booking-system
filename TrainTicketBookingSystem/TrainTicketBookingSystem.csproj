@@ -194,6 +194,7 @@
     <Compile Include="Controllers\TicketController.cs" />
     <Compile Include="Controllers\TrainController.cs" />
     <Compile Include="Filters\AjaxOnlyAttribute.cs" />
+    <Compile Include="Filters\HasBannerAttribute.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -224,10 +225,6 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\carrousel1.jpg" />
-    <Content Include="Content\carrousel2.jpg" />
-    <Content Include="Content\carrousel3.jpg" />
-    <Content Include="Content\carrousel4.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -306,6 +303,10 @@
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\Ticket\Print.cshtml" />
     <Content Include="Views\Shared\_NavigationBar.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\ConfirmationStatus.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\PassengerClass.cshtml" />
+    <Content Include="Views\Shared\_Carousel.cshtml" />
+    <Content Include="Views\Shared\_Banner.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

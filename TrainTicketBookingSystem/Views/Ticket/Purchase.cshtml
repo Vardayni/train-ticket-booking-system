@@ -1,58 +1,86 @@
 ﻿@{
+    ViewBag.Title = "Purchase";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @using TrainTicketBookingSystem.ViewModels.Train
 @model AvailableTrainViewModel
 
-<h3 class="text-danger">@ViewBag.Error</h3>
+<div class="col-md-6">
+    @if (!string.IsNullOrEmpty(ViewBag.Error))
+    {
+        <div class="alert alert-dismissible alert-danger">
+            <button type="button" class="close" data-dismiss="alert"><i class="material-icons">&#xE5CD;</i></button>
+            @ViewBag.Error
+        </div>
+    }
 
-<div>
-    @Html.LabelFor(x => x.Route.Departure)
-    @Html.DisplayFor(x => x.Route.Departure.Name)
-</div>
-<div>
-    @Html.LabelFor(x => x.Route.Arrival)
-    @Html.DisplayFor(x => x.Route.Arrival.Name)
-</div>
-<div>
-    @Html.LabelFor(x => x.DepartureTime)
-    @Html.DisplayFor(x => x.DepartureTime)
-</div>
-<div>
-    @Html.LabelFor(x => x.BusinessClassPassengersCount)
-    @Html.DisplayFor(x => x.BusinessClassPassengersCount) / @AvailableTrainViewModel.BusinessClassCapacity
-</div>
-<div>
-    @Html.LabelFor(x => x.EconomicClassPassengersCount)
-    @Html.DisplayFor(x => x.EconomicClassPassengersCount) / @AvailableTrainViewModel.EconomicClassCapacity
-</div>
-@using (Html.BeginForm("Purchase", "Ticket", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    <div class="form-group">
-        <label for="PassengersCount">Passengers count: </label>
-        <select id="PassengersCount" name="PassengersCount">
-            @for (int i = 1; i <= 10; i++)
-            {
-                <option value="@i">@i</option>
-            }
-        </select>
-        @Html.HiddenFor(x => x.Id)
-
-        <input type="radio" name="TravellerClass" value="economic" checked />
-        <label for="TravellerClass">Economic</label>
-        <input type="radio" name="TravellerClass" value="business" />
-        <label for="TravellerClass">Business</label>
+    <div class="lead">
+        <b>@Html.DisplayFor(x => x.Route.Departure.Name)</b>
+        <i class="material-icons" style="font-size: 15px">&#xE5C8;</i>
+        <b>@Html.DisplayFor(x => x.Route.Arrival.Name)</b>
     </div>
-
     <div>
-        @Html.LabelFor(x => x.Route.Price)
-        @Html.DisplayFor(x => x.Route.Price)
+        @Html.Label("Date:")
+        <b>
+            @Html.DisplayFor(x => x.DepartureTime)
+        </b>
     </div>
+    <div>
+        @Html.LabelFor(x => x.BusinessClassPassengersCount):
+        <b>
+            @Html.DisplayFor(x => x.BusinessClassPassengersCount) / @AvailableTrainViewModel.BusinessClassCapacity
+        </b>
+    </div>
+    <div>
+        @Html.LabelFor(x => x.EconomicClassPassengersCount):
+        <b>
+            @Html.DisplayFor(x => x.EconomicClassPassengersCount) / @AvailableTrainViewModel.EconomicClassCapacity
+        </b>
+    </div>
+    <hr />
+    @using (Html.BeginForm("Purchase", "Ticket", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.HiddenFor(x => x.Id)
+            <div class="container">
+                <div class="row">
+                    <label for="PassengersCount">Passengers: </label>
+                    <select id="PassengersCount" name="PassengersCount">
+                        @for (int i = 1; i <= 10; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                </div>
 
-    <input type="submit" class="btn btn-primary" value="Purchase" />
-}
+                <div class="row">
+                    <div class="container">
+                        <div class="row">
+                            <input type="radio" name="TravellerClass" value="economic" checked />
+                            <label for="TravellerClass">Economic</label>
+                        </div>
+                        <div class="row">
+                            <input type="radio" name="TravellerClass" value="business" />
+                            <label for="TravellerClass">Business</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div>
+            @Html.LabelFor(x => x.Route.Price):
+            <b class="text-success">
+                @Html.DisplayFor(x => x.Route.Price)
+            </b>
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="Purchase" />
+    }
+</div>
 
 <script src="~/Scripts/jquery-2.1.4.min.js"></script>
 <script src="~/Scripts/App/Search/results.js"></script>

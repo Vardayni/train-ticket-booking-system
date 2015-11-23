@@ -10,45 +10,55 @@
 
 @if (Model.Count == 0)
 {
-    <h2>No trains found. Try searching with different criteria.</h2>
+    <h3>No trains found. Try searching with different criteria.</h3>
 }
 else
 {
-    <h2>Available trains found: </h2>
-    foreach (var train in Model)
-    {
-        <div class="train-list-item">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        @Html.DisplayFor(x => train.Route.Departure.Name)
-                        -
-                        @Html.DisplayFor(x => train.Route.Arrival.Name)
-                    </h3>
+    <h3>Available trains found: </h3>
+    <div class="container">
+        <div class="row">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var train = Model[i];
+                string themeClass = i == 0 ? "primary" : "default";
+                <div class="train-list-item col-md-4">
+                    <div class="panel panel-@themeClass">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                @Html.DisplayFor(x => train.Route.Departure.Name)
+                                <i class="material-icons" style="font-size: 15px">&#xE5C8;</i>
+                                @Html.DisplayFor(x => train.Route.Arrival.Name)
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <div>
+                                @Html.Label("Date:")
+                                <b>
+                                    @Html.DisplayFor(x => train.DepartureTime)
+                                </b>
+                            </div>
+                            <label>Seats taken:</label>
+                            <div>
+                                @Html.LabelFor(x => train.BusinessClassPassengersCount):
+                                <b>
+                                    @Html.DisplayFor(x => train.BusinessClassPassengersCount) / @AvailableTrainViewModel.BusinessClassCapacity
+                                </b>
+                            </div>
+                            <div>
+                                @Html.LabelFor(x => train.EconomicClassPassengersCount):
+                                <b>
+                                    @Html.DisplayFor(x => train.EconomicClassPassengersCount) / @AvailableTrainViewModel.EconomicClassCapacity
+                                </b>
+                            </div>
+                            @Html.ActionLink("View Details", "Purchase", "Ticket", new { id = train.Id }, new { @class = "btn btn-" + themeClass })
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <div>
-                        @Html.Label("Date:")
-                        <b>
-                            @Html.DisplayFor(x => train.DepartureTime)
-                        </b>
-                    </div>
-                    <label>Seats taken:</label>
-                    <div>
-                        @Html.LabelFor(x => train.BusinessClassPassengersCount):
-                        <b>
-                            @Html.DisplayFor(x => train.BusinessClassPassengersCount) / @AvailableTrainViewModel.BusinessClassCapacity
-                        </b>
-                    </div>
-                    <div>
-                        @Html.LabelFor(x => train.EconomicClassPassengersCount):
-                        <b>
-                            @Html.DisplayFor(x => train.EconomicClassPassengersCount) / @AvailableTrainViewModel.EconomicClassCapacity
-                        </b>
-                    </div>
-                    @Html.ActionLink("View Details", "Purchase", "Ticket", new { id = train.Id }, new { @class = "btn btn-primary" })
-                </div>
+            }
+            <div id="banner-wrapper" class="col-md-4 col-md-offset-8">
+                @Html.Partial("_Banner")
             </div>
         </div>
-    }
+    </div>
+
 }
