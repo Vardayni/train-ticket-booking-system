@@ -6,10 +6,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TrainTicketBookingSystem.Models
 {
     public class TrainTicket
-	{
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public Guid Id { get; set; } = Guid.NewGuid();
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         virtual public Guid UserId { get; set; }
 
@@ -17,17 +17,17 @@ namespace TrainTicketBookingSystem.Models
 
         virtual public City Departure { get; set; }
 
-		virtual public City Arrival { get; set; }
+        virtual public City Arrival { get; set; }
 
         [DataType(DataType.Date)]
         [Display(Name = "Date")]
-		public DateTime? DepartureTime { get; set; }
+        public DateTime? DepartureTime { get; set; }
 
         [UIHint("PassengerClass")]
-		public bool IsBusinessClass { get; set; }
+        public bool IsBusinessClass { get; set; }
 
-		[Range(1, 10)]
-		public int PassengersCount { get; set; }
+        [Range(1, 10)]
+        public int PassengersCount { get; set; }
 
         public DateTime PurchasedOn { get; set; } = DateTime.Now;
 

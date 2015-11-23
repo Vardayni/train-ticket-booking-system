@@ -4,14 +4,14 @@ using System.ComponentModel.DataAnnotations;
 namespace TrainTicketBookingSystem.ViewModels
 {
     public class SearchTrainTicketViewModel
-	{
-		[Display(Name = "Departure")]
+    {
+        [Display(Name = "Departure")]
         [Required]
-		public string Departure { get; set; }
+        public string Departure { get; set; }
 
-		[Display(Name = "Arrival")]
+        [Display(Name = "Arrival")]
         [Required]
-		public string Arrival { get; set; }
+        public string Arrival { get; set; }
 
         [Display(Name = "Departure time")]
         [Required]
@@ -19,5 +19,5 @@ namespace TrainTicketBookingSystem.ViewModels
 
         [Required]
         public int DepartureTimeHour { get; set; }
-	}
+    }
 }

@@ -29,9 +29,9 @@ namespace TrainTicketBookingSystem
             ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/bower_components/bootswatch-dist/css/bootstrap.min.css",
-                      "~/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css",
-                      "~/Content/site.css"
+                "~/bower_components/bootswatch-dist/css/bootstrap.min.css",
+                "~/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css",
+                "~/Content/Site.css"
             ));
         }
     }
