@@ -40,5 +40,55 @@ namespace TrainTicketBookingSystem.Helpers
                 { "22:00", 22 },
                 { "23:00", 23 }
             };
+
+        public static IList<Banner> BANNERS = new List<Banner>
+        {
+                new Banner()
+                {
+                    ImageClass = "amsterdam",
+                    Heading = "Visit Amsterdam",
+                    Content = @"From its humble beginnings as a 13th-century fishing village on a river 
+                                bed to its current role as a major hub for business, tourism and culture,
+                                Amsterdam has had a strong tradition as a centre of culture and commerce.",
+                    RedirectUrl = new Uri("http://www.iamsterdam.com/en/visiting")
+                },
+                new Banner()
+                {
+                    ImageClass = "berlin",
+                    Heading = "Visit Berlin",
+                    Content = @"Since reunification, Berlin has established itself as an internationally
+                                attractive city bustling with creativity and open to the world.
+                                The FIFA World Cup Finals in 2006 provided for a markedly improved
+                                image of Germany and Berlin.",
+                    RedirectUrl = new Uri("http://www.visitberlin.de/en")
+                },
+                new Banner()
+                {
+                    ImageClass = "brussels",
+                    Heading = "Visit Brussels",
+                    Content = @"Things happen in Brussels! There’s always a buzz. 
+                                Not just because it’s the capital of 500 million Europeans
+                                and political decisions are made here, but also because Brussels
+                                offers you an exciting cultural, artistic and social scene.",
+                    RedirectUrl = new Uri("http://visitbrussels.be/")
+                },
+                new Banner()
+                {
+                    ImageClass = "london",
+                    Heading = "Visit London",
+                    Content = @"Come and explore all London has to offer 
+                                and get ready for the adventure of a lifetime. 
+                                The great city of London awaits you.",
+                    RedirectUrl = new Uri("http://www.visitlondon.com/")
+                },
+                new Banner()
+                {
+                    ImageClass = "paris",
+                    Heading = "Visit Paris",
+                    Content = @"If you love history, art and good wine,
+                                Paris is the place for you.",
+                    RedirectUrl = new Uri("http://en.parisinfo.com/")
+                }
+        };
     }
 }

@@ -71,6 +71,26 @@ select {
     background: #000 no-repeat center url('Images/amsterdam-banner.jpg');
 }
 
+.berlin-img {
+    background: #000 no-repeat center url('Images/berlin-banner.jpg');
+}
+
+.brussels-img {
+    background: #000 no-repeat center url('Images/brussels-banner.jpg');
+}
+
+.london-img {
+    background: #000 no-repeat center url('Images/london-banner.jpg');
+}
+
+.paris-img {
+    background: #000 no-repeat center url('Images/paris-banner.jpg');
+}
+
+a#banner {
+    text-decoration: none;
+}
+
 .banner-heading, .banner-content {
     color: white;
     padding: 0.5em 0.5em;

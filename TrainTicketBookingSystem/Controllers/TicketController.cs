@@ -28,7 +28,6 @@ namespace TrainTicketBookingSystem.Controllers
         // GET /tickets
         [HttpGet]
         [Authorize]
-        [HasBanner]
         public ActionResult List()
         {
             string currentUserId = User.Identity.GetUserId();

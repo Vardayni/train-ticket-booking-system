@@ -199,6 +199,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Banner.cs" />
+    <Compile Include="Helpers\Generators\BannerGenerator.cs" />
     <Compile Include="Helpers\Generators\DateTimeGenerator.cs" />
     <Compile Include="Helpers\Generators\TrainGenerator.cs" />
     <Compile Include="Helpers\Constants.cs" />
