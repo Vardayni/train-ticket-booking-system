@@ -18,7 +18,7 @@
     "bootstrap": "3.3.5",
     "jquery.validate": "1.11.1",
     "jquery": "2.1.4",
-    "bootswatch-dist": "paper",
+    "bootswatch-dist": "3.3.5-paper",
     "jquery-validation-unobtrusive": "3.2.4",
     "eonasdan-bootstrap-datetimepicker": "~4.17.37"
   }
