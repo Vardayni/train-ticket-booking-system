@@ -1,37 +1,38 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace TrainTicketBookingSystem
 {
-	public class BundleConfig
-	{
-		// For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
-		public static void RegisterBundles(BundleCollection bundles)
-		{
-			bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-						"~/Scripts/jquery-{version}.js"));
+    public class BundleConfig
+    {
+        public static void RegisterBundles(BundleCollection bundles)
+        {
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                "~/bower_components/jquery/dist/jquery.min.js"
+            ));
 
-			bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-						"~/Scripts/jquery.validate*"));
+            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
+                "~/bower_components/jquery.validate/jquery.validate.js",
+                "~/bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"
+            ));
 
-			bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-						"~/Scripts/modernizr-*"));
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                "~/bower_components/bootstrap/dist/js/bootstrap.min.js"
+            ));
 
-			bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-					  "~/Scripts/bootstrap.js",
-					  "~/Scripts/respond.js"));
-
-			bundles.Add(new ScriptBundle("~/bundles/datetime").Include(
-						"~/Scripts/moment-with-locales.js",
-						"~/Scripts/bootstrap-datetimepicker*"));
+            bundles.Add(new ScriptBundle("~/bundles/datetime").Include(
+                "~/bower_components/moment/min/moment-with-locales.min.js",
+                "~/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"
+            ));
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
-                        "~/Scripts/App/Search/result.js"));
+                "~/Scripts/App/Search/result.js"
+            ));
 
-			bundles.Add(new StyleBundle("~/Content/css").Include(
-					  "~/Content/bootstrap.css",
-					  "~/Content/bootstrap-datetimepicker.min.css",
-                      "~/Content/site.css"));
-		}
-	}
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                      "~/bower_components/bootswatch-dist/css/bootstrap.min.css",
+                      "~/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css",
+                      "~/Content/site.css"
+            ));
+        }
+    }
 }
