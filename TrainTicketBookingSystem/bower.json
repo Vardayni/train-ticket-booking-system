@@ -1,0 +1,25 @@
+{
+  "name": "train-ticket-booking-system",
+  "version": "0.0.1",
+  "homepage": "https://github.com/tsvetan-ganev/train-ticket-booking-system",
+  "authors": [
+    "Tsvetan Ganev <tsvetan.ganev@hotmail.com>"
+  ],
+  "description": "University project.",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "3.3.5",
+    "jquery.validate": "1.11.1",
+    "jquery": "2.1.4",
+    "bootswatch-dist": "3.3.5-paper",
+    "jquery-validation-unobtrusive": "3.2.4",
+    "eonasdan-bootstrap-datetimepicker": "~4.17.37"
+  }
+}
