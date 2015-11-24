@@ -67,19 +67,18 @@ SET MSBUILD_PATH=%ProgramFiles(x86)%\MSBuild\14.0\Bin\MSBuild.exe
 
 echo Handling .NET Web Application deployment.
 
-:: 1. Restore NuGet packages
-IF /I "TrainTicketBookingSystem.sln" NEQ "" (
-  call :ExecuteCmd nuget restore "%DEPLOYMENT_SOURCE%\TrainTicketBookingSystem.sln"
-  IF !ERRORLEVEL! NEQ 0 goto error
-)
-
-
 :: 4. Bower Install
 if EXIST "%DEPLOYMENT_TARGET%\bower.json" (
     pushd "%DEPLOYMENT_TARGET%"
     call :ExecuteCmd bower install
     IF !ERRORLEVEL! NEQ 0 goto error
     popd
+)
+
+:: 1. Restore NuGet packages
+IF /I "TrainTicketBookingSystem.sln" NEQ "" (
+  call :ExecuteCmd nuget restore "%DEPLOYMENT_SOURCE%\TrainTicketBookingSystem.sln"
+  IF !ERRORLEVEL! NEQ 0 goto error
 )
 
 :: 2. Build to the temporary path
