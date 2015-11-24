@@ -222,6 +222,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bower.json" />
+    <Content Include="Content\Images\amsterdam-banner.jpg" />
+    <Content Include="Content\Images\berlin-banner.jpg" />
+    <Content Include="Content\Images\brussels-banner.jpg" />
+    <Content Include="Content\Images\buy-online.jpg" />
+    <Content Include="Content\Images\cancel-ticket.jpg" />
+    <Content Include="Content\Images\carrousel1.jpg" />
+    <Content Include="Content\Images\carrousel2.jpg" />
+    <Content Include="Content\Images\carrousel3.jpg" />
+    <Content Include="Content\Images\london-banner.jpg" />
+    <Content Include="Content\Images\mobile-friendly.jpg" />
+    <Content Include="Content\Images\paris-banner.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -296,7 +307,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50665</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
