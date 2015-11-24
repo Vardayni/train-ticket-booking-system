@@ -76,7 +76,8 @@ IF /I "TrainTicketBookingSystem.sln" NEQ "" (
 :: 2. Bower Install
 
     pushd "%DEPLOYMENT_TARGET%"
-    call :ExecuteCmd cd TrainTicketBookingSystem\
+    call :ExecuteCmd cd TrainTicketBookingSystem
+    echo dir
     call :ExecuteCmd bower install
     IF !ERRORLEVEL! NEQ 0 goto error
     popd
