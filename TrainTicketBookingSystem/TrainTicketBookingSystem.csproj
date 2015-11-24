@@ -222,6 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bower.json" />
+    <Content Include="bower_components\bootswatch-dist\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Images\amsterdam-banner.jpg" />
     <Content Include="Content\Images\berlin-banner.jpg" />
     <Content Include="Content\Images\brussels-banner.jpg" />
@@ -292,6 +293,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bower_components\bootswatch-dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="bower_components\bootswatch-dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="bower_components\bootswatch-dist\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="bower_components\bootswatch-dist\fonts\glyphicons-halflings-regular.woff2" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
