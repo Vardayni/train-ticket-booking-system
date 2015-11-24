@@ -33,6 +33,8 @@ namespace TrainTicketBookingSystem
                 "~/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css",
                 "~/Content/Site.css"
             ));
+
+            BundleTable.EnableOptimizations = true;
         }
     }
 }
