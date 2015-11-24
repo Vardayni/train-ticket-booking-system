@@ -24,6 +24,7 @@ bld/
 
 # Bower Components
 bower_components/
+
 # Visual Studio 2015 cache/options directory
 .vs/
 
@@ -215,3 +216,6 @@ ModelManifest.xml
 
 # API credentials
 ApiCredentials.config
+
+# Connection Strings
+ConnectionStrings.config

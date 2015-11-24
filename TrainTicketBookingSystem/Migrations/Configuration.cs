@@ -68,12 +68,11 @@ namespace TrainTicketBookingSystem.Migrations
 
                 foreach (DateTime date in dates)
                 {
-                    for (int i = 0; i < 24; i++)
+                    for (int i = 0; i < 24; i += 2)
                     {
-                        var dateWithHour = date.AddHours(i);
                         foreach (var route in trainRoutes)
                         {
-                            trains.Add(TrainGenerator.GenerateTrain(route, dateWithHour));
+                            trains.Add(TrainGenerator.GenerateTrain(route, date.AddHours(i)));
                         }
                     }
                 }
