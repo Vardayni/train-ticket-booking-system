@@ -6,7 +6,7 @@ namespace TrainTicketBookingSystem.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("SQLAZURECONNSTR", throwIfV1Schema: false)
+            : base("MSSQL", throwIfV1Schema: false)
         {
         }
 
