@@ -224,8 +224,8 @@ namespace TrainTicketBookingSystem.Controllers
             MailAddress from = new MailAddress("admin@trainticketbookingsystem.com");
             MailAddress to = new MailAddress(user.Email);
 
-            string sendGridUserName = ConfigurationManager.AppSettings["sendGridUser"];
-            string sendGridPassword = ConfigurationManager.AppSettings["sendGridPassword"]; 
+            string sendGridUserName = ConfigurationManager.AppSettings["SENDGRID_USERNAME"];
+            string sendGridPassword = ConfigurationManager.AppSettings["SENDGRID_PASSWORD"]; 
 
             SmtpClient mail = new SmtpClient()
             {
