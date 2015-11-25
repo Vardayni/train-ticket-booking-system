@@ -17,7 +17,8 @@ namespace TrainTicketBookingSystem.Controllers
     public class TicketController : Controller
     {
         private ApplicationDbContext db;
-        protected UserManager<ApplicationUser> UserManager { get; set; }
+        protected UserManager<ApplicationUser> UserManager
+        { get; set; }
 
         public TicketController()
         {
@@ -149,7 +150,7 @@ namespace TrainTicketBookingSystem.Controllers
             if (ticketToCancel == null ||
                 ticketToCancel.UserId.ToString() != User.Identity.GetUserId())
             {
-                return new HttpStatusCodeResult(404); 
+                return new HttpStatusCodeResult(404);
             }
 
             db.TrainTickets.Remove(ticketToCancel);
@@ -165,7 +166,7 @@ namespace TrainTicketBookingSystem.Controllers
         {
             var ticket = db.TrainTickets.Find(id);
 
-            if (ticket == null || 
+            if (ticket == null ||
                 ticket.UserId.ToString() != User.Identity.GetUserId())
             {
                 return new HttpStatusCodeResult(404);
@@ -181,7 +182,7 @@ namespace TrainTicketBookingSystem.Controllers
         {
             var ticket = db.TrainTickets.Find(id);
 
-            if (ticket == null || 
+            if (ticket == null ||
                 ticket.UserId.ToString() != User.Identity.GetUserId())
             {
                 return new HttpStatusCodeResult(404);
@@ -215,7 +216,7 @@ namespace TrainTicketBookingSystem.Controllers
             var websiteUrl = new UrlHelper(this.ControllerContext.RequestContext);
             var ticket = db.TrainTickets.Find(ticketId);
 
-            if (ticket == null || 
+            if (ticket == null ||
                 ticket.UserId.ToString() != user.Id)
             {
                 return new HttpStatusCodeResult(404);
@@ -225,7 +226,7 @@ namespace TrainTicketBookingSystem.Controllers
             MailAddress to = new MailAddress(user.Email);
 
             string sendGridUserName = ConfigurationManager.AppSettings["SENDGRID_USERNAME"];
-            string sendGridPassword = ConfigurationManager.AppSettings["SENDGRID_PASSWORD"]; 
+            string sendGridPassword = ConfigurationManager.AppSettings["SENDGRID_PASSWORD"];
 
             SmtpClient mail = new SmtpClient()
             {
@@ -238,13 +239,14 @@ namespace TrainTicketBookingSystem.Controllers
                 Timeout = 20000
             };
 
-            const string websiteRoot = "http://localhost:50665";
+            string websiteRoot = ConfigurationManager.AppSettings["WEBSITE_ROOT_URL"];
+
             MailMessage msg = new MailMessage(from, to);
 
             msg.Subject = $"Confirm your train ticket ({ticket.Departure.Name} - {ticket.Arrival.Name}).";
             msg.BodyEncoding = System.Text.Encoding.UTF8;
             msg.IsBodyHtml = true;
-            
+
             msg.Body += $"Dear {user.FirstName}, you requested to purchase the following ticket: ";
             msg.Body += $"<p> {ticket.ToString()} </p>";
             msg.Body += $"<a href=\"{websiteRoot}{websiteUrl.Action("ConfirmTicketPurchase")}/{ticket.Id}\" >";
