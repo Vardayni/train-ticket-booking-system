@@ -32,12 +32,11 @@ namespace TrainTicketBookingSystem.Controllers
         public ActionResult Search(SearchTrainTicketViewModel trainTicket)
         {
             ViewBag.Errors = new List<string>();
-            CultureInfo beNL = new CultureInfo("be-NL");
 
             if (ModelState.IsValid)
             {
                 DateTime departureTime = 
-                    DateTime.Parse(trainTicket.DepartureTime, beNL)
+                    DateTime.Parse(trainTicket.DepartureTime)
                             .AddHours(trainTicket.DepartureTimeHour);
 
                 if (departureTime < DateTime.Now)
