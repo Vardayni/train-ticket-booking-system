@@ -199,11 +199,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AppConstants.cs" />
     <Compile Include="Helpers\Banner.cs" />
     <Compile Include="Helpers\Generators\BannerGenerator.cs" />
     <Compile Include="Helpers\Generators\DateTimeGenerator.cs" />
     <Compile Include="Helpers\Generators\TrainGenerator.cs" />
-    <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Train.cs" />
@@ -237,8 +237,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\App\Search\results.js" />
+    <Content Include="Scripts\App\Search\purchase.js" />
     <Content Include="Scripts\App\Search\search.js" />
+    <None Include="Scripts\App\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
