@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using TrainTicketBookingSystem.Filters;
@@ -34,8 +35,9 @@ namespace TrainTicketBookingSystem.Controllers
 
             if (ModelState.IsValid)
             {
-                DateTime departureTime = DateTime.Parse(trainTicket.DepartureTime)
-                                            .AddHours(trainTicket.DepartureTimeHour);
+                DateTime departureTime = 
+                    DateTime.Parse(trainTicket.DepartureTime)
+                            .AddHours(trainTicket.DepartureTimeHour);
 
                 if (departureTime < DateTime.Now)
                 {

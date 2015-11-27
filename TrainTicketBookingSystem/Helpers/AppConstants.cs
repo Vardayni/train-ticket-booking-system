@@ -13,6 +13,8 @@ namespace TrainTicketBookingSystem.Helpers
 
         public static int TRAIN_CAPACITY_ECONOMIC = 20;
 
+        public static int MAX_DAYS_BEFORE_RESERVATION = 13;
+
         public static Dictionary<string, int> HOURS =
             new Dictionary<string, int> {
                 { "00:00", 0 },

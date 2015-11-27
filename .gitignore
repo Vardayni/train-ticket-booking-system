@@ -24,6 +24,15 @@ bld/
 
 # Bower Components
 bower_components/
+
+# TypeScript typings
+typings/
+tsd.json
+_references.js
+
+# Azure Publishing Profiles
+PublishProfiles/
+
 # Visual Studio 2015 cache/options directory
 .vs/
 
@@ -215,3 +224,6 @@ ModelManifest.xml
 
 # API credentials
 ApiCredentials.config
+
+# Connection Strings
+ConnectionStrings.config

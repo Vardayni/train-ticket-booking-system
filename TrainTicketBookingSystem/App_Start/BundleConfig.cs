@@ -25,7 +25,8 @@ namespace TrainTicketBookingSystem
             ));
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
-                "~/Scripts/App/Search/result.js"
+                "~/Scripts/App/Search/purchase.js",
+                "~/Scripts/App/Search/search.js"
             ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
@@ -33,6 +34,8 @@ namespace TrainTicketBookingSystem
                 "~/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css",
                 "~/Content/Site.css"
             ));
+
+            BundleTable.EnableOptimizations = true;
         }
     }
 }
