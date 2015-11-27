@@ -110,6 +110,11 @@ namespace TrainTicketBookingSystem.Controllers
                 ViewBag.Error = "This train has already departed.";
                 return View(viewModel);
             }
+            else if (train.DepartureTime > DateTime.Now.AddDays(AppConstants.MAX_DAYS_BEFORE_RESERVATION))
+            {
+                ViewBag.Error = "You can only purchase tickets as late as two weeks before departure.";
+                return View(viewModel);
+            }
 
             string errorMessage = ValidateAvailableSeats(ticket, viewModel);
 
@@ -132,7 +137,7 @@ namespace TrainTicketBookingSystem.Controllers
                 Price = train.Route.Price * ticket.PassengersCount,
                 IsConfirmed = false
             };
-            generatedTicket.Price *= generatedTicket.IsBusinessClass ? 1.5m : 1.0m;
+            generatedTicket.Price *= generatedTicket.IsBusinessClass ? AppConstants.BUSINESS_CLASS_MULTIPLIER : 1.0m;
 
             db.TrainTickets.Add(generatedTicket);
             db.SaveChanges();
