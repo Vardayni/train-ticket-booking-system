@@ -1,4 +1,4 @@
-﻿@model SearchTrainTicketViewModel
+﻿@model SearchTrainViewModel
 
 @{
     ViewBag.Title = "Search";
@@ -16,75 +16,90 @@
         <div class="col-md-6">
             @using (Html.BeginForm("Search", "Train", FormMethod.Get, new { @class = "form-horizontal" }))
             {
-                <fieldset>
-                    <legend>Search for a train</legend>
-                </fieldset>
-                <div class="departure form-group">
-                    @Html.LabelFor(model => model.Departure, htmlAttributes: new { @class = "col-md-2" })
-                    <select id="departure-dropdown" name="Departure" class="form-control col-md-10">
-                        <option selected disabled>Choose a departure...</option>
-                        @foreach (var city in ViewBag.Cities)
-                        {
-                            <option value="@city.Name">
-                                @city.Name
-                            </option>
-                        }
-                    </select>
+                <div class="row">
+                    <fieldset>
+                        <legend>Search for a train</legend>
+                    </fieldset>
                 </div>
-                <div class="arrival form-group">
-                    @Html.LabelFor(model => model.Arrival, htmlAttributes: new { @class = "col-md-2" })
-
-                    <select id="arrival-dropdown" name="Arrival" class="form-control col-md-10">
-                        <option selected disabled>Choose an arrival...</option>
-                        @foreach (var city in ViewBag.Cities)
-                {
-                            <option value="@city.Name">
-                                @city.Name
-                            </option>
-                        }
-                    </select>
-                </div>
-
-                <div class="departure-time form-group form-inline">
-                    @Html.LabelFor(model => model.DepartureTime, htmlAttributes: new { @class = "col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.DepartureTime, new { htmlAttributes = new { @class = "form-control", @id = "departureDate" } })
-                        @Html.ValidationMessageFor(model => model.DepartureTime, "", new { @class = "text-danger" })
-
-                        <select name="DepartureTimeHour" class="form-control">
-                            @foreach (var hour in ViewBag.Hours)
-                            {
-                                <option value="@hour.Value">
-                                    @hour.Key
-                                </option>
-                            }
-                        </select>
+                    <div class="container">
+                        <div class="row">
+                            <div class="departure form-group">
+                                @Html.LabelFor(model => model.Departure, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                                <select id="departure-dropdown" name="Departure" class="form-control col-sm-9">
+                                    <option selected disabled>Choose a departure...</option>
+                                    @foreach (var city in ViewBag.Cities)
+                                    {
+                                        <option value="@city.Name">
+                                            @city.Name
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="submit form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <button id="submit-btn" type="submit" class="btn btn-primary"><i class="material-icons small">&#xE8B6;</i> Search</button>
+                    <div class="container">
+                        <div class="row">
+                            <div class="arrival form-group">
+                                @Html.LabelFor(model => model.Arrival, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                                <select id="arrival-dropdown" name="Arrival" class="form-control col-sm-9">
+                                    <option selected disabled>Choose an arrival...</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="departure-time form-group form-inline">
+                                @Html.LabelFor(model => model.DepartureTime, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                                @Html.EditorFor(model => model.DepartureTime, new { htmlAttributes = new { @class = "form-control col-sm-6", @id = "departureDate" } })
+                                @Html.ValidationMessageFor(model => model.DepartureTime, "", new { @class = "text-danger" })
+                                <select id="departureTime" name="DepartureTimeHour" class="form-control col-sm-3">
+                                    @foreach (var hour in ViewBag.Hours)
+                                    {
+                                        <option value="@hour.Value">
+                                            @hour.Key
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="form-group">
+                                <button id="submit-btn" type="submit" class="btn btn-primary col-sm-offset-3 col-sm-6 col-xs-12">
+                                    <i class="material-icons small">&#xE8B6;</i> Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
             }
         </div>
-        <div id="banner-wrapper" class="col-md-6">
+        <div id="banner-wrapper" class="col-md-offset-1 col-md-5">
             @Html.Partial("_Banner")
         </div>
     </div>
 </div>
 
 @section Scripts {
+    <script>
+        var GLOBAL = {};
+
+        GLOBAL.CITIES = @Html.Raw(ViewBag.CitiesJson) || [];
+    </script>
+
     @Scripts.Render("~/bundles/jqueryval")
 
-    <script src="~/Scripts/App/Search/search.js"></script>
     <script>
         $(function () {
-            var minDate = moment(),
-                maxDate = moment().add(13, 'days');
+            var minDate = moment().add(1, 'hours')
+            maxDate = moment().add(13, 'days'),
+            departureTimeDD = document.getElementById('departureTime'),
+            departureDate = document.getElementById('departureDate');
 
-            $('#departureDate').datetimepicker({
+            departureTimeDD.selectedIndex = minDate.hour();
+
+            $(departureDate).datetimepicker({
                 minDate: minDate,
                 maxDate: maxDate,
                 format: 'L',
@@ -95,5 +110,6 @@
             });
         });
     </script>
+    <script src="~/Scripts/App/Train/index.js"></script>
 }
 

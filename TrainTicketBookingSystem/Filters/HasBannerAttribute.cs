@@ -1,6 +1,5 @@
 ﻿using System.Web.Mvc;
-using TrainTicketBookingSystem.Helpers;
-using TrainTicketBookingSystem.Helpers.Generators;
+using TrainTicketBookingSystem.Utilities.Generators;
 
 namespace TrainTicketBookingSystem.Filters
 {

@@ -7,22 +7,23 @@ using System.Net;
 using System.Net.Mail;
 using System.Web.Mvc;
 using TrainTicketBookingSystem.Filters;
-using TrainTicketBookingSystem.Helpers;
+using TrainTicketBookingSystem.Utilities.Constants;
 using TrainTicketBookingSystem.Models;
 using TrainTicketBookingSystem.ViewModels;
 using TrainTicketBookingSystem.ViewModels.Train;
+using TrainTicketBookingSystem.ViewModels.Ticket;
 
 namespace TrainTicketBookingSystem.Controllers
 {
     public class TicketController : Controller
     {
-        private ApplicationDbContext db;
+        private TrainTicketsDbContext db;
         protected UserManager<ApplicationUser> UserManager
         { get; set; }
 
         public TicketController()
         {
-            db = new ApplicationDbContext();
+            db = new TrainTicketsDbContext();
             UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
         }
 
@@ -35,6 +36,8 @@ namespace TrainTicketBookingSystem.Controllers
 
             var tickets = db.TrainTickets
                             .Where(t => t.UserId.ToString() == currentUserId)
+                            .Where(t => t.DepartureTime > DateTime.Now)
+                            .OrderBy(t => t.DepartureTime)
                             .ToList();
 
             return View(tickets);
@@ -137,7 +140,8 @@ namespace TrainTicketBookingSystem.Controllers
                 Price = train.Route.Price * ticket.PassengersCount,
                 IsConfirmed = false
             };
-            generatedTicket.Price *= generatedTicket.IsBusinessClass ? AppConstants.BUSINESS_CLASS_MULTIPLIER : 1.0m;
+            generatedTicket.Price *= generatedTicket.IsBusinessClass 
+                ? AppConstants.BUSINESS_CLASS_MULTIPLIER : 1.0m;
 
             db.TrainTickets.Add(generatedTicket);
             db.SaveChanges();
@@ -170,6 +174,7 @@ namespace TrainTicketBookingSystem.Controllers
         public ActionResult Print(Guid id)
         {
             var ticket = db.TrainTickets.Find(id);
+            var user = db.Users.Find(User.Identity.GetUserId());
 
             if (ticket == null ||
                 ticket.UserId.ToString() != User.Identity.GetUserId())
@@ -177,7 +182,20 @@ namespace TrainTicketBookingSystem.Controllers
                 return new HttpStatusCodeResult(404);
             }
 
-            return View(ticket);
+            var viewModel = new PrintTicketViewModel
+            {
+                Id = ticket.Id,
+                Arrival = ticket.Arrival.Name,
+                Departure = ticket.Departure.Name,
+                CustomerName = $"{user.FirstName} {user.LastName}",
+                DepartureTime = ticket.DepartureTime,
+                IsBusinessClass = ticket.IsBusinessClass,
+                PassengersCount = ticket.PassengersCount,
+                Price = ticket.Price,
+                PurchasedOn = ticket.PurchasedOn
+            };
+
+            return View(viewModel);
         }
 
         // GET /tickets/ConfirmTicketPurchase/{id}

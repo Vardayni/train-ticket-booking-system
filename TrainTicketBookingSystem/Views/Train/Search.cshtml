@@ -2,19 +2,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using TrainTicketBookingSystem.ViewModels.Train
+@using TrainTicketBookingSystem.Utilities.Constants
+
 @model IList<AvailableTrainViewModel>
 
 @{
     ViewBag.Title = "Search results";
 }
 
-@if (Model.Count == 0)
+@if (Model?.Count > 0)
 {
-    <h3>No trains found. Try searching with different criteria.</h3>
-}
-else
-{
-    <h3>Available trains found: </h3>
+    <h4>Available trains found: </h4>
+    <hr />
     <div class="container">
         <div class="row">
             @for (int i = 0; i < Model.Count; i++)
@@ -39,18 +38,23 @@ else
                             </div>
                             <label>Seats taken:</label>
                             <div>
-                                @Html.LabelFor(x => train.BusinessClassPassengersCount):
+                                @Html.LabelFor(x => train.EconomicClassPassengersCount):
                                 <b>
-                                    @Html.DisplayFor(x => train.BusinessClassPassengersCount) / @AvailableTrainViewModel.BusinessClassCapacity
+                                    @Html.DisplayFor(x => train.EconomicClassPassengersCount)
+                                    /
+                                    @AppConstants.TRAIN_CAPACITY_ECONOMIC
                                 </b>
                             </div>
                             <div>
-                                @Html.LabelFor(x => train.EconomicClassPassengersCount):
+                                @Html.LabelFor(x => train.BusinessClassPassengersCount):
                                 <b>
-                                    @Html.DisplayFor(x => train.EconomicClassPassengersCount) / @AvailableTrainViewModel.EconomicClassCapacity
+                                    @Html.DisplayFor(x => train.BusinessClassPassengersCount)
+                                    /
+                                    @AppConstants.TRAIN_CAPACITY_BUSINESS
                                 </b>
                             </div>
-                            @Html.ActionLink("View Details", "Purchase", "Ticket", new { id = train.Id }, new { @class = "btn btn-" + themeClass })
+                            @Html.ActionLink("View Details", "Purchase", "Ticket",
+                                    new { id = train.Id }, new { @class = "btn btn-" + themeClass })
                         </div>
                     </div>
                 </div>
@@ -60,5 +64,8 @@ else
             </div>
         </div>
     </div>
-
+}
+else
+{
+    <h4>No trains found. Try searching with different criteria.</h4>
 }

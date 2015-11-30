@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using TrainTicketBookingSystem.Filters;
-using TrainTicketBookingSystem.Helpers;
 using TrainTicketBookingSystem.Models;
 using TrainTicketBookingSystem.ViewModels;
 using TrainTicketBookingSystem.ViewModels.Train;
@@ -13,15 +11,14 @@ namespace TrainTicketBookingSystem.Controllers
 {
     public class TrainController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private TrainTicketsDbContext db = new TrainTicketsDbContext();
 
         // GET: trains/ 
         [HttpGet]
         [HasBanner]
+        [InitializeSearchTrainsForm]
         public ActionResult Index()
         {
-            InitializeCitiesAndHoursDropDownLists();
-
             ViewBag.Errors = new List<string>();
             return View();
         }
@@ -29,7 +26,8 @@ namespace TrainTicketBookingSystem.Controllers
         // GET: trains/search
         [HttpGet]
         [HasBanner]
-        public ActionResult Search(SearchTrainTicketViewModel trainTicket)
+        [InitializeSearchTrainsForm]
+        public ActionResult Search(SearchTrainViewModel trainTicket)
         {
             ViewBag.Errors = new List<string>();
 
@@ -42,7 +40,6 @@ namespace TrainTicketBookingSystem.Controllers
                 if (departureTime < DateTime.Now)
                 {
                     ModelState.AddModelError("AlreadyDeparted", "The time of departure for your search has already passed.");
-                    InitializeCitiesAndHoursDropDownLists();
                     return View(nameof(this.Index), trainTicket);
                 }
 
@@ -54,7 +51,6 @@ namespace TrainTicketBookingSystem.Controllers
                 if (trainRoute == null)
                 {
                     ModelState.AddModelError("InvalidRoute", "Departure and arrival cities should be different.");
-                    InitializeCitiesAndHoursDropDownLists();
                     return View(nameof(this.Index), trainTicket);
                 }
 
@@ -114,16 +110,6 @@ namespace TrainTicketBookingSystem.Controllers
             return View(model);
         }
 
-        // TODO: Add as a filter
-        private void InitializeCitiesAndHoursDropDownLists()
-        {
-            var cities = db.Cities.ToList();
-            var hours = AppConstants.HOURS;
-
-            ViewBag.Hours = hours;
-            ViewBag.Cities = cities;
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -132,6 +118,5 @@ namespace TrainTicketBookingSystem.Controllers
             }
             base.Dispose(disposing);
         }
-
     }
 }

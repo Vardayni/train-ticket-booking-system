@@ -5,16 +5,16 @@ namespace TrainTicketBookingSystem.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
     using Models;
-    using Helpers.Generators;
+    using Utilities.Generators;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<TrainTicketsDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(ApplicationDbContext context)
+        protected override void Seed(TrainTicketsDbContext context)
         {
             var paris = new City { Name = "Paris", Id = Guid.Parse("280BB2E9-782A-42C9-875A-7DC0178452A6") };
             var brussels = new City { Name = "Brussels", Id = Guid.Parse("280BB2E9-782A-42C9-875A-7DC0178452A7") };

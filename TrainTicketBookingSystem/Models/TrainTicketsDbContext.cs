@@ -3,18 +3,19 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace TrainTicketBookingSystem.Models
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class TrainTicketsDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext()
+        public TrainTicketsDbContext()
             : base("MSSQL", throwIfV1Schema: false)
         {
         }
 
-        public static ApplicationDbContext Create()
+        public static TrainTicketsDbContext Create()
         {
-            return new ApplicationDbContext();
+            return new TrainTicketsDbContext();
         }
 
+        // Entities
         public DbSet<TrainTicket> TrainTickets { get; set; }
 
         public DbSet<City> Cities { get; set; }

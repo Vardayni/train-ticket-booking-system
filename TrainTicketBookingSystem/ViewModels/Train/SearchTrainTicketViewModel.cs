@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TrainTicketBookingSystem.ViewModels
 {
-    public class SearchTrainTicketViewModel
+    public class SearchTrainViewModel
     {
         [Display(Name = "Departure")]
         [Required]

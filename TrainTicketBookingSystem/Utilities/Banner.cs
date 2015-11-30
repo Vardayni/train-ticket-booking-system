@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TrainTicketBookingSystem.Helpers
+namespace TrainTicketBookingSystem.Utilities
 {
     public class Banner
     {
