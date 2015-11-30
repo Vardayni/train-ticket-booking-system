@@ -4,6 +4,7 @@
 }
 
 @using TrainTicketBookingSystem.ViewModels.Train
+@using TrainTicketBookingSystem.Utilities.Constants
 @model AvailableTrainViewModel
 
 <div class="col-md-6">
@@ -27,15 +28,19 @@
         </b>
     </div>
     <div>
-        @Html.LabelFor(x => x.BusinessClassPassengersCount):
+        @Html.LabelFor(x => x.EconomicClassPassengersCount):
         <b>
-            @Html.DisplayFor(x => x.BusinessClassPassengersCount) / @AvailableTrainViewModel.BusinessClassCapacity
+            @Html.DisplayFor(x => x.EconomicClassPassengersCount)
+            /
+            @AppConstants.TRAIN_CAPACITY_ECONOMIC
         </b>
     </div>
     <div>
-        @Html.LabelFor(x => x.EconomicClassPassengersCount):
+        @Html.LabelFor(x => x.BusinessClassPassengersCount):
         <b>
-            @Html.DisplayFor(x => x.EconomicClassPassengersCount) / @AvailableTrainViewModel.EconomicClassCapacity
+            @Html.DisplayFor(x => x.BusinessClassPassengersCount)
+            /
+            @AppConstants.TRAIN_CAPACITY_BUSINESS
         </b>
     </div>
     <hr />

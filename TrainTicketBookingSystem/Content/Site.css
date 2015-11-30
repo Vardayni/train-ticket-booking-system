@@ -20,9 +20,10 @@
 
 /* Set width on the form input elements since they're 75% wide by default */
 input,
+button,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 268px;
 }
 
 select {
@@ -48,18 +49,26 @@ select {
     color: red;
 }
 
+.datepicker-days .day {
+    color: rgba(33, 150, 243, 1);
+    font-weight: bold;
+}
+
+    .datepicker-days .day.disabled {
+        color: #ff3737 !important;
+        font-weight: normal;
+    }
+
+
 .panel:hover {
     -moz-box-shadow: 0 2px 9px rgba(0, 0, 0, 0.5);
     -webkit-box-shadow: 0 2px 9px rgba(0, 0, 0, 0.5);
     box-shadow: 0 2px 9px rgba(0, 0, 0, 0.5);
 }
 
-.panel-primary:hover {
+.panel-primary:hover, .panel-default:hover {
     background-color: azure;
-}
-
-.panel-default:hover {
-    background-color: rgba(0,0,0, 0.1);
+    color: #333;
 }
 
 .banner {
@@ -164,4 +173,15 @@ a#banner {
 .icon-train, .icon-price, .icon-destination {
     font-size: 8em;
     text-align: center;
+}
+
+/** Search page */
+#departureDate {
+    text-align: center;
+}
+
+@media only screen and (min-width: 756px) {
+    #departureTime {
+        margin-left: 4px;
+    }
 }

@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace TrainTicketBookingSystem.Helpers
+namespace TrainTicketBookingSystem.Utilities.Constants
 {
     public static class AppConstants
     {
-        public static decimal BUSINESS_CLASS_MULTIPLIER = 1.5M;
+        public const decimal BUSINESS_CLASS_MULTIPLIER = 1.5M;
 
-        public static int TRAIN_CAPACITY_BUSINESS = 10;
+        public const int TRAIN_CAPACITY_BUSINESS = 10;
 
-        public static int TRAIN_CAPACITY_ECONOMIC = 20;
+        public const int TRAIN_CAPACITY_ECONOMIC = 20;
 
-        public static int MAX_DAYS_BEFORE_RESERVATION = 13;
+        public const int MAX_DAYS_BEFORE_RESERVATION = 13;
 
         public static Dictionary<string, int> HOURS =
             new Dictionary<string, int> {

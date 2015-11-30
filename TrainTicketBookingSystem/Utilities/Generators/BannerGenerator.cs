@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using TrainTicketBookingSystem.Utilities.Constants;
 
-namespace TrainTicketBookingSystem.Helpers.Generators
+namespace TrainTicketBookingSystem.Utilities.Generators
 {
     public static class BannerGenerator
     {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace TrainTicketBookingSystem
@@ -11,6 +7,8 @@ namespace TrainTicketBookingSystem
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            routes.LowercaseUrls = true;
+
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.IgnoreRoute("Content/Images/*.jpg");
 
@@ -18,6 +16,12 @@ namespace TrainTicketBookingSystem
                 name: "Train",
                 url: "trains/{action}/{id}",
                 defaults: new { controller = "Train", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Ticket",
+                url: "tickets/{action}/{id}",
+                defaults: new { controller = "Ticket", action = "List", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(

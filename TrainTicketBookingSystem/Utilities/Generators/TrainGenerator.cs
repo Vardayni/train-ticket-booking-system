@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using TrainTicketBookingSystem.Models;
 
-namespace TrainTicketBookingSystem.Helpers.Generators
+namespace TrainTicketBookingSystem.Utilities.Generators
 {
     public class TrainGenerator
     {

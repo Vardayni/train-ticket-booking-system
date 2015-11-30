@@ -188,35 +188,35 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AdministratorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
     <Compile Include="Controllers\TrainController.cs" />
     <Compile Include="Filters\AjaxOnlyAttribute.cs" />
     <Compile Include="Filters\HasBannerAttribute.cs" />
+    <Compile Include="Filters\InitializeSearchTrainsFormAttribute.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\AppConstants.cs" />
-    <Compile Include="Helpers\Banner.cs" />
-    <Compile Include="Helpers\Generators\BannerGenerator.cs" />
-    <Compile Include="Helpers\Generators\DateTimeGenerator.cs" />
-    <Compile Include="Helpers\Generators\TrainGenerator.cs" />
+    <Compile Include="Utilities\Constants\AppConstants.cs" />
+    <Compile Include="Utilities\Banner.cs" />
+    <Compile Include="Utilities\Generators\BannerGenerator.cs" />
+    <Compile Include="Utilities\Generators\DateTimeGenerator.cs" />
+    <Compile Include="Utilities\Generators\TrainGenerator.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Train.cs" />
     <Compile Include="Models\TrainRoute.cs" />
     <Compile Include="Models\TrainTicket.cs" />
     <Compile Include="ViewModels\Identity\AccountViewModels.cs" />
-    <Compile Include="Models\ApplicationDbContext.cs" />
+    <Compile Include="Models\TrainTicketsDbContext.cs" />
     <Compile Include="Models\Identity\ApplicationUser.cs" />
-    <Compile Include="ViewModels\Identity\AdminViewModels.cs" />
     <Compile Include="ViewModels\Identity\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\Search\SearchTrainTicketViewModel.cs" />
+    <Compile Include="ViewModels\Ticket\PrintTicketViewModel.cs" />
+    <Compile Include="ViewModels\Train\SearchTrainTicketViewModel.cs" />
     <Compile Include="ViewModels\Ticket\PurchaseTicketViewModel.cs" />
     <Compile Include="ViewModels\Train\AvailableTrainViewModel.cs" />
   </ItemGroup>
@@ -263,12 +263,9 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Ticket\Purchase.cshtml" />
@@ -276,8 +273,6 @@
     <Content Include="Views\Train\Details.cshtml" />
     <Content Include="Views\Train\Index.cshtml" />
     <Content Include="Views\Ticket\ConfirmationEmailSent.cshtml" />
-    <Content Include="Views\Administrator\AddRole.cshtml" />
-    <Content Include="Views\Administrator\CreateUser.cshtml" />
     <Content Include="Views\Ticket\PurchaseConfirmed.cshtml" />
     <Content Include="Views\Ticket\List.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Currency.cshtml" />
