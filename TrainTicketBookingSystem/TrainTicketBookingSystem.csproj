@@ -238,6 +238,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\App\Ticket\list.js" />
     <Content Include="Scripts\App\Ticket\purchase.js" />
     <Content Include="Scripts\App\Train\index.js" />
     <None Include="Scripts\App\_references.js" />
