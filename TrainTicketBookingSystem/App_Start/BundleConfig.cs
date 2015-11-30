@@ -1,4 +1,5 @@
 ﻿using System.Web.Optimization;
+using TrainTicketBookingSystem.Utilities;
 
 namespace TrainTicketBookingSystem
 {
@@ -6,23 +7,16 @@ namespace TrainTicketBookingSystem
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                "~/bower_components/jquery/dist/jquery.min.js"
-            ));
-
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
+            var vendorScriptsBundle = new ScriptBundle("~/bundles/vendor").Include(
+                "~/bower_components/jquery/dist/jquery.min.js",
                 "~/bower_components/jquery.validate/jquery.validate.js",
-                "~/bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"
-            ));
-
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                "~/bower_components/bootstrap/dist/js/bootstrap.min.js"
-            ));
-
-            bundles.Add(new ScriptBundle("~/bundles/datetime").Include(
+                "~/bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
                 "~/bower_components/moment/min/moment-with-locales.min.js",
-                "~/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"
-            ));
+                "~/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js",
+                "~/bower_components/bootstrap/dist/js/bootstrap.min.js");
+
+            vendorScriptsBundle.Orderer = new KeepAsDeclaredBundleOrderer();
+            bundles.Add(vendorScriptsBundle);
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                 "~/Scripts/App/Search/purchase.js",

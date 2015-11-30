@@ -209,6 +209,7 @@
     <Compile Include="Models\Train.cs" />
     <Compile Include="Models\TrainRoute.cs" />
     <Compile Include="Models\TrainTicket.cs" />
+    <Compile Include="Utilities\KeepAsDeclaredBundleOrderer.cs" />
     <Compile Include="ViewModels\Identity\AccountViewModels.cs" />
     <Compile Include="Models\TrainTicketsDbContext.cs" />
     <Compile Include="Models\Identity\ApplicationUser.cs" />
@@ -237,8 +238,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\App\Search\purchase.js" />
-    <Content Include="Scripts\App\Search\search.js" />
+    <Content Include="Scripts\App\Ticket\purchase.js" />
+    <Content Include="Scripts\App\Train\index.js" />
     <None Include="Scripts\App\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

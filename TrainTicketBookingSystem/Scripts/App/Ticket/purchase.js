@@ -1,25 +1,28 @@
 ﻿(function () {
+  'use strict';
+
   var passengersDropdown = document.getElementById('PassengersCount'),
       travellerClassRadioButtons = document.getElementsByName('TravellerClass'),
       priceDisplay = document.getElementsByClassName('currency')[0],
       priceInput = document.getElementById('PriceInput'),
       currencySymbol = moneyToFloat(priceDisplay.innerHTML).symbol,
       originalPrice = moneyToFloat(priceDisplay.innerHTML).value,
-      businessCoef = 1.50
-  isBusinessClass = false;
+      BUSINESS_CLASS_COEF = 1.50,
+      isBusinessClass = false,
+      radioButtonsArray;
 
   passengersDropdown.addEventListener('change', function (el) {
     if (isBusinessClass) {
       priceDisplay.innerHTML = currencySymbol + ' ' + parseFloat(parseFloat(originalPrice)
                                      * parseInt(passengersDropdown.value)
-                                     * businessCoef).toFixed(2);
+                                     * BUSINESS_CLASS_COEF).toFixed(2);
     } else {
       priceDisplay.innerHTML = currencySymbol + ' ' + parseFloat(parseFloat(originalPrice)
                                      * parseInt(passengersDropdown.value)).toFixed(2);
     }
   });
 
-  var radioButtonsArray = [].slice.call(travellerClassRadioButtons);
+  radioButtonsArray = [].slice.call(travellerClassRadioButtons);
   radioButtonsArray.forEach(function (el, index) {
     el.onchange = function () {
       isBusinessClass = !isBusinessClass;
@@ -28,7 +31,7 @@
 
       if (isBusinessClass) {
         priceDisplay.innerHTML = currencySymbol + ' ' + parseFloat(parseFloat(originalPrice)
-                                * parseFloat(passengersDropdown.value) * businessCoef).toFixed(2);
+                                * parseFloat(passengersDropdown.value) * BUSINESS_CLASS_COEF).toFixed(2);
       }
     }
   });
@@ -46,4 +49,4 @@
       value: value
     };
   }
-}())
+}());
