@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TrainTicketBookingSystem.Models;
+using TrainTicketBookingSystem.ViewModels.Manage;
 
 namespace TrainTicketBookingSystem.Controllers
 {
@@ -15,6 +16,7 @@ namespace TrainTicketBookingSystem.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private TrainTicketsDbContext db = TrainTicketsDbContext.Create();
 
         public ManageController()
         {
@@ -32,9 +34,9 @@ namespace TrainTicketBookingSystem.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -51,25 +53,40 @@ namespace TrainTicketBookingSystem.Controllers
         }
 
         //
-        // GET: /Manage/Index
-        public async Task<ActionResult> Index(ManageMessageId? message)
+        // GET: /Manage/AccountSettings
+        public async Task<ActionResult> AccountSettings(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : "";
 
             var userId = User.Identity.GetUserId();
-            var model = new IndexViewModel
+            var user = db.Users.Find(userId);
+            var viewModel = new AccountSettingsViewModel
             {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-                Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
-            return View(model);
+            return View(viewModel);
+        }
+
+        // POST /Manage/UpdateAccountSettings
+        public ActionResult UpdateAccountSettings(AccountSettingsViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = db.Users.Find(User.Identity.GetUserId());
+
+                user.FirstName = viewModel.FirstName;
+                user.LastName = viewModel.LastName;
+
+                db.SaveChanges();
+            }
+
+            return RedirectToAction(nameof(AccountSettings));
         }
 
         //
@@ -114,7 +131,7 @@ namespace TrainTicketBookingSystem.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -165,6 +182,6 @@ namespace TrainTicketBookingSystem.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }

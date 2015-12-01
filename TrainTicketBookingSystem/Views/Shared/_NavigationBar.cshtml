@@ -21,11 +21,6 @@
                 {
                     <li>@Html.ActionLink("Purchased Tickets", "List", "Ticket")</li>
                 }
-                @if (User.IsInRole("Admin"))
-                {
-                    <li>@Html.ActionLink("Create user", "CreateUser", "Administrator")</li>
-                            <li>@Html.ActionLink("Add role", "AddRole", "Administrator")</li>
-                }
             </ul>
             @Html.Partial("_LoginPartial")
         </div>
