@@ -14,7 +14,7 @@ namespace TrainTicketBookingSystem.Migrations
             AutomaticMigrationsEnabled = true;
         }
 
-        private static Random rand;
+        private static Random rand = new Random();
 
         protected override void Seed(TrainTicketsDbContext context)
         {
