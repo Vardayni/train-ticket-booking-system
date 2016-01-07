@@ -14,6 +14,8 @@ namespace TrainTicketBookingSystem.Migrations
             AutomaticMigrationsEnabled = true;
         }
 
+        private static Random rand;
+
         protected override void Seed(TrainTicketsDbContext context)
         {
             var paris = new City { Name = "Paris", Id = Guid.Parse("280BB2E9-782A-42C9-875A-7DC0178452A6") };
@@ -27,12 +29,13 @@ namespace TrainTicketBookingSystem.Migrations
                 paris, brussels, berlin, amsterdam, london
             };
 
+            List<TrainRoute> trainRoutes;
             if (context.Cities.Count() == 0)
             {
                 context.Cities.AddOrUpdate(cities.ToArray());
 
                 // TrainRoutes
-                var trainRoutes = new List<TrainRoute>()
+                trainRoutes = new List<TrainRoute>()
                 {
                     new TrainRoute { Departure = paris, Arrival = brussels, Price = 20.0M },
                     new TrainRoute { Departure = paris, Arrival = amsterdam, Price = 30.0M },
@@ -61,24 +64,28 @@ namespace TrainTicketBookingSystem.Migrations
                };
 
                 context.TrainRoutes.AddOrUpdate(trainRoutes.ToArray());
+            }
+            else
+            {
+                trainRoutes = context.TrainRoutes.ToList();
+            }
 
-                // TRAINS
-                var dates = DateTimeGenerator.GetDaysInRange(DateTime.Today, DateTime.Today.AddDays(30));
-                var trains = new List<Train>();
+            var dates = DateTimeGenerator.GetDaysInRange(DateTime.Today, DateTime.Today.AddDays(60));
+            var trains = new List<Train>();
 
-                foreach (DateTime date in dates)
+            foreach (DateTime date in dates)
+            {
+                for (int i = 0; i < 24; i += 2)
                 {
-                    for (int i = 0; i < 24; i += 2)
+                    foreach (var route in trainRoutes)
                     {
-                        foreach (var route in trainRoutes)
-                        {
-                            trains.Add(TrainGenerator.GenerateTrain(route, date.AddHours(i)));
-                        }
+                        trains.Add(TrainGenerator.GenerateTrain(route,
+                            date.AddHours(i).AddMinutes(rand.Next(0, 60))));
                     }
                 }
-
-                context.Trains.AddRange(trains);
             }
+
+            context.Trains.AddRange(trains);
 
             context.Configuration.AutoDetectChangesEnabled = false;
             context.Configuration.ValidateOnSaveEnabled = false;
