@@ -71,6 +71,10 @@ select {
     color: #333;
 }
 
+.panel-body {
+    padding-left: 30px;
+}
+
 .banner {
     width: 300px;
     height: 250px;
