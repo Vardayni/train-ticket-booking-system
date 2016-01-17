@@ -32,6 +32,10 @@ select {
 }
 /** TRAIN TICKET BOOKING SYSTEM SPECIFIC */
 
+nav {
+    font-size: 1.25em;
+}
+
 .carousel-caption p {
     font-size: 1.5em;
 }
