@@ -25,5 +25,15 @@ namespace TrainTicketBookingSystem.Controllers
 
             return View();
         }
+
+        public ActionResult PageNotFound()
+        {
+            return View();
+        }
+
+        public ActionResult Error()
+        {
+            return View();
+        }
     }
 }

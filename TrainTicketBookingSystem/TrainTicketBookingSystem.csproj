@@ -242,6 +242,7 @@
     <Content Include="Scripts\App\Ticket\list.js" />
     <Content Include="Scripts\App\Ticket\purchase.js" />
     <Content Include="Scripts\App\Train\index.js" />
+    <Content Include="Views\Home\PageNotFound.cshtml" />
     <None Include="Scripts\App\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -283,6 +284,8 @@
     <Content Include="Views\Shared\DisplayTemplates\PassengerClass.cshtml" />
     <Content Include="Views\Shared\_Carousel.cshtml" />
     <Content Include="Views\Shared\_Banner.cshtml" />
+    <Content Include="Views\Shared\Errors\404.html" />
+    <Content Include="Views\Home\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
