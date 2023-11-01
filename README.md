@@ -13,3 +13,4 @@ Go to the root of the MVC project and make a file called ```ApiCredentials.confi
 ```
 
 You also need to run ```bower install``` to download and resolve the front-end dependencies.
+#design by avi
